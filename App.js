@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView ,TextInput } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView ,TextInput, TouchableOpacity, Alert, TouchableWithoutFeedback, Keyboard} from 'react-native';
 
 const currencyPerRuppe= {
   DOLLAR: 0.014,
@@ -24,8 +24,19 @@ export default class App extends React.Component {
     }
   }
 
+
+  btnPressed = (currency) => {
+    if(this.state.inputValue === "") {
+      Alert.alert("Enter some value");
+    }
+    let res = parseFloat(this.state.inputValue) * currencyPerRuppe[currency]
+    this.setState({ resultValue: res.toFixed(2) })
+   
+  };
+
   render() {
     return (
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView style={styles.container}>
       <View style={{ flex:1 , marginTop:20}}>
       <View style={styles.resultContainer}>
@@ -33,9 +44,9 @@ export default class App extends React.Component {
           {this.state.resultValue}
         </Text>        
         </View>
-        <View style={styles.inputContainer}>
+        <View style={styles.resultContainer}>
           <TextInput
-            style={styles.input}
+            style={styles.resultText}
             selectionColor="#fff"
             keyboardType="numeric"
             placeholder="Enter Value"
@@ -45,9 +56,66 @@ export default class App extends React.Component {
             })  }
           />
         </View>
+        <View style={styles.converterBtnContainer}>
+        <TouchableOpacity
+            style={styles.converterBtn}
+            onPress={ () => this.btnPressed("DOLLAR")}
+            >
+            <Text style={styles.btnText}>DOLLAR</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+            style={styles.converterBtn}
+            >
+            <Text style={styles.btnText}>EURO</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+            style={styles.converterBtn}
+            >
+            <Text style={styles.btnText}>POUND</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+            style={styles.converterBtn}
+            >
+            <Text style={styles.btnText}>RUBEL</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+            style={styles.converterBtn}
+            >
+            <Text style={styles.btnText}>AUSDOLLAR</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+            style={styles.converterBtn}
+            >
+            <Text style={styles.btnText}>CANDOLLAR</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+            style={styles.converterBtn}
+            >
+            <Text style={styles.btnText}>YEN</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+            style={styles.converterBtn}
+            >
+            <Text style={styles.btnText}>DINAR</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+            style={styles.converterBtn}
+            >
+            <Text style={styles.btnText}>BITCOIN</Text>
+            </TouchableOpacity>
+        </View>
       </View>
        
       </SafeAreaView>
+      </TouchableWithoutFeedback>
     );
   }
 }
@@ -55,7 +123,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#badc57',
+    backgroundColor: '#2C3335',
 
   },
   resultContainer: { 
@@ -72,7 +140,25 @@ const styles = StyleSheet.create({
       fontWeight: "bold",
       fontSize: 30
     },
-    input: {
-
+    converterBtnContainer: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      marginTop: 20,
+      borderColor: "#c1c1c1",
+      borderWidth: 2
+    },
+    converterBtn: {
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "#EC4849",
+      height: 100,
+      borderColor: "#c1c1c1",
+      borderWidth: 2,
+      width: "33.33%"
+    },
+    btnText: {
+      color:"#fff",
+      fontWeight: "bold",
+      fontSize: 20
     }
 });
